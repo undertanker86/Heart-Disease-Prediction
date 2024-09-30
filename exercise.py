@@ -312,7 +312,6 @@ def stacking_classifier(X_train, X_test, y_train, y_test):
 
 
 if __name__ == '__main__':
-    # Load the data
     df = pd.read_csv(
         'module3-project-heart-disease-prediction/Heart-Disease-Prediction/cleveland.csv', header=None)
     df.columns = ['age', 'sex', 'cp', 'trestbps', 'chol',
