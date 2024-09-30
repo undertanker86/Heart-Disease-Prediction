@@ -61,12 +61,7 @@ def plot_relation_between_age_gender_and_disease(df):
 # Task 3:
 
 
-def knn_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+def knn_classifier(X_train, X_test, y_train, y_test):
 
     # define the model
     classifier = KNeighborsClassifier(
@@ -95,12 +90,8 @@ def knn_classifier(df):
 # Task 4:
 
 
-def svm_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
+def svm_classifier(X_train, X_test, y_train, y_test):
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
     classifier = SVC(kernel='rbf', random_state=42)
     classifier.fit(X_train, y_train)
 
@@ -123,12 +114,7 @@ def svm_classifier(df):
 # Task 5:
 
 
-def naive_bayes_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+def naive_bayes_classifier(X_train, X_test, y_train, y_test):
 
     classifier = GaussianNB()
     classifier.fit(X_train, y_train)
@@ -152,12 +138,7 @@ def naive_bayes_classifier(df):
 # Task 6:
 
 
-def decision_tree_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+def decision_tree_classifier(X_train, X_test, y_train, y_test):
 
     classifier = DecisionTreeClassifier(
         criterion='gini', max_depth=10, min_samples_split=2, random_state=42)
@@ -184,12 +165,7 @@ def decision_tree_classifier(df):
 # Task 7:
 
 
-def random_forest_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+def random_forest_classifier(X_train, X_test, y_train, y_test):
 
     classifier = RandomForestClassifier(
         criterion='gini', max_depth=10, min_samples_split=2, n_estimators=10, random_state=42)
@@ -216,13 +192,7 @@ def random_forest_classifier(df):
 # Task 8:
 
 
-def ada_boost_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
-
+def ada_boost_classifier(X_train, X_test, y_train, y_test):
     # define the model
     classifier = AdaBoostClassifier(
         n_estimators=50, learning_rate=1.0, random_state=42)
@@ -249,13 +219,7 @@ def ada_boost_classifier(df):
 # Task 9:
 
 
-def gradient_boosting_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
-
+def gradient_boosting_classifier(X_train, X_test, y_train, y_test):
     # define the model
 
     classifier = GradientBoostingClassifier(
@@ -283,13 +247,7 @@ def gradient_boosting_classifier(df):
 
 
 # Task 10:
-def xgboost_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
-
+def xgboost_classifier(X_train, X_test, y_train, y_test):
     xg = XGBClassifier(objective="binary:logistic",
                        random_state=42, n_estimators=100)
     xg.fit(X_train, y_train)
@@ -310,20 +268,20 @@ def xgboost_classifier(df):
 # Task 11:
 
 
-def stacking_classifier(df):
-    X = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
-
-    from sklearn.model_selection import train_test_split
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+def stacking_classifier(X_train, X_test, y_train, y_test):
 
     dtc = DecisionTreeClassifier(random_state=42)
+
     rfc = RandomForestClassifier(random_state=42)
+
     knn = KNeighborsClassifier()
+
     xgb = XGBClassifier(XGBClassifier)
+
     gc = GradientBoostingClassifier(random_state=42)
+
     svc = SVC(kernel='rbf', random_state=42)
+
     ad = AdaBoostClassifier(random_state=42)
 
     clf = [('dtc', dtc), ('rfc', rfc), ('knn', knn), ('gc', gc),
@@ -357,23 +315,15 @@ if __name__ == '__main__':
     # Load the data
     df = pd.read_csv(
         'module3-project-heart-disease-prediction/Heart-Disease-Prediction/cleveland.csv', header=None)
-
-    # Task 1:
-    # plot_relation_between_age_and_disease(df)
-    # Task 2:
-    # plot_relation_between_age_gender_and_disease(df)
-    # X = df.iloc[:, :-1].values
-    # y = df.iloc[:, -1].values
-
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
-
-    # sc = ss()
-    # X_train_after = sc.fit_transform(X_train)
-    # X_test_after = sc.transform(X_test)
     df.columns = ['age', 'sex', 'cp', 'trestbps', 'chol',
                   'fbs', 'restecg', 'thalach', 'exang',
                   'oldpeak', 'slope', 'ca', 'thal', 'target']
     df['target'] = df.target.map({0: 0, 1: 1, 2: 1, 3: 1, 4: 1})
     df['thal'] = df.thal.fillna(df.thal.mean())
     df['ca'] = df.ca.fillna(df.ca.mean())
-    stacking_classifier(df)
+    X = df.iloc[:, :-1].values
+    y = df.iloc[:, -1].values
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42)
+    svm_classifier(X_train, X_test, y_train, y_test)
